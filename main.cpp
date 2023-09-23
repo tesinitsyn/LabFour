@@ -56,29 +56,12 @@ public:
         }
     }
 
-    void reshenie() {
-        double maxs = p[0];
-        int nom = 0;
+    void inputAuto(int number){
         for (int i = 0; i < size; i++) {
-            if (p[i] > maxs) {
-                maxs = p[i];
-                nom = i;
-            }
+            p[i] = number;
         }
-        int *massiv = new int[size - nom - 1];
-        for (int i = nom + 1; i < size; i++) {
-            massiv[i] = p[i];
-        }
-        cout << endl << "Полученный массив: ";
-        int kol = 0;
-        for (int i = nom + 1; i < size; i++) {
-            cout << massiv[i] << " ";
-            kol += 1;
-        }
-        cout << endl;
-        cout << "Размер массива: " << kol;
     }
-    int solution(int arrayX[], int arrayC[]){
+    static int solution(int arrayX[], int arrayC[]){
         int totalSum = 0;
         for(int i = 0; i < 20; i++){
             if(arrayX[i] < arrayC[i]){
@@ -128,38 +111,33 @@ int main() {
             }
             cout << "Solution is ";
             cout << forTest.solution(arrayX, arrayC);
+            cout << "\n";
         }
         if (solutionType == 2) {
+            int totalSum = 0;
             vect arrayX(20);
             vect arrayC(20);
-            cout << "Input first array\n";
-            arrayX.input();
-            cout << "Input second array\n";
-            arrayC.input()
+            string answer;
+            cout << "Enter data automatically or manually[a/m]?";
+            cin >> answer;
+            if (answer == "a") {
+                arrayX.inputAuto(10);
+                arrayC.inputAuto(1);
+            } else {
+               cout << "Input first array\n";
+               arrayX.input();
+               cout << "Input second array\n";
+               arrayC.input();
+            }                                                                                   
+            for (int i = 0; i < arrayX.get_size(); i++) {
+                if(arrayX.element(i) < arrayC.element(i)) {
+                    cout << "Solution is -1";
+                    break;
+                }else{
+                    totalSum = pow(arrayX.element(i), 2 ) - pow(arrayC.element(i), 2) + totalSum;
+                }
+            }
+            cout << "Solution is " + to_string(totalSum) + "\n";
         }
-//    vect x(7);
-//    x.input();
-//    x.print();
-//    double maxs = x.element(0);
-//    int nom = 0;
-//    for (int i = 0; i < x.get_size(); i++) {
-//        if (x.element(i) > maxs) {
-//            maxs = x.element(i);
-//            nom = i;
-//        }
-//    }
-//    int *massiv = new int[x.get_size() - nom - 1];
-//    for (int i = nom + 1; i < x.get_size(); i++) {
-//        massiv[i] = x.element(i);
-//    }
-//    cout << endl << "Initial array: ";
-//    int kol = 0;
-//    for (int i = nom + 1; i < x.get_size(); i++) {
-//        cout << massiv[i] << " ";
-//        kol += 1;
-//    }
-//    cout << endl;
-//    cout << "Array size: " << kol;
-//    return 0;
     }
 }
